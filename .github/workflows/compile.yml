@@ -5,7 +5,7 @@ on:
       - main
       - master
 env:
-  LATEX_ROOT: abcd-venue-20XX-talk
+  LATEX_ROOT: cilc-2022-logic-api-ml-tak
 jobs:
   compile:
     runs-on: ubuntu-latest
