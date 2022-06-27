@@ -49,27 +49,7 @@
 	\\
 	July 1, 2022, Bologna (Italy)
 }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginSection[]
-{
-%\\\\\\\\\\\\\\\\\\\\\
-\begin{frame}<beamer>[c,noframenumbering]
-\frametitle{Next in Line\ldots}
-\tableofcontents[sectionstyle=show/shaded,subsectionstyle=hide]
-\end{frame}
-%\\\\\\\\\\\\\\\\\\\\\
-}
-\AtBeginSubsection[]
-{
-%\\\\\\\\\\\\\\\\\\\\\
-\begin{frame}<beamer>[shrink,noframenumbering]
-    \frametitle{Focus on\ldots}
-	\mbox{~}
-	\tableofcontents[currentsubsection,sectionstyle=shaded,subsectionstyle=show/shaded]
-	\mbox{~}
-\end{frame}
-%\\\\\\\\\\\\\\\\\\\\\
-}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -79,121 +59,228 @@
 %\\\\\\\\\\\\\\\\\\\\\
 
 %===============================================================================
-\section{Motivation \& Context}
+\section{Context, Motivation, \& Goals}
 %===============================================================================
 
 %\\\\\\\\\\\\\\\\\\\\\
 \begin{frame}[c]{Context}
     
-    Provide some context (max 4-5 items):
-    %
-    \vfill
-    %
     \begin{itemize}
-        \item fact 1
+        \item Prolog is the most prominent LP technology out there\ccite{prolog50years-tplp,lptech4mas-jaamas35}
         %
         \begin{itemize}
-            \item note
+            \item used to implement other logic-based technologies 
         \end{itemize}
         
         \vfill
         
-        \item[$\Rightarrow$] fact 2 implied by fact 1
+        \item Plenty of libraries supporting ML in mainstream programming languages
         %
         \begin{itemize}
-            \item[!] important \alert{notice}
+            \item main features: training, (de)serialising, or using ML predictors
+            \item[eg] Scikit-Learn or Tensorflow for Python, Smile or \deeplearningforj{} on the JVM
         \end{itemize}
         
         \vfill
         
-        \item fact 3
+        \item Poor interoperability among LP and ML
         %
         \begin{itemize}
-            \item note
+            \item mostly due to the lack of technologies bridging them
+            \item arguably slowing down research about hybrid systems
         \end{itemize}
-        
-        \vfill
-        
-        \item fact 4
-        
     \end{itemize}
 \end{frame}
 %\\\\\\\\\\\\\\\\\\\\\
 
 %\\\\\\\\\\\\\\\\\\\\\
 \begin{frame}[c]{Motivation}
-    Enumerate motivations for this work:
-    %
+    \begin{itemize}
+        \item Need to fill the (technological) gap among ML and LP
+        %
+        \begin{itemize}
+            \item especially for what concerns the ``LP calls ML'' case
+        \end{itemize}
+        
+        \vfill
+        
+        \item Support the exploitation of ML predictors in LP
+        %
+        \begin{itemize}
+            \item[eg] for training, (de)serialising, or using them 
+        \end{itemize}
+        
+        \vfill
+        
+        \item Enable the exploitation of trained predictors as logic predicates
+        
+        \vfill
+        
+        \item Support the implementation of hybrid systems
+         %
+         \begin{itemize}
+            \item[ie] where symbolic AI is used to govern or combine sub-symbolic predictors
+        \end{itemize}
+        
+    \end{itemize}
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
+
+%\\\\\\\\\\\\\\\\\\\\\
+\begin{frame}{Goal of the Paper}
+
+    \begin{enumerate}
+        \item Propose a logic API for ML
+        %
+        \begin{itemize}
+            \item[ie] a set of logic predicates for working ML, in LP
+            \item covering all phases of a ML workflow
+        \end{itemize}
+        
+        \vfill
+
+        \item Design a technological architecture for re-using existing ML libraries
+        
+        \vfill
+
+        \item Select technologies for prototyping the API
+        
+        \vfill
+
+        \item Highlight the (expected) benefits
+    \end{enumerate}
+
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
+
+%===============================================================================
+\section{Background}
+%===============================================================================
+
+%\\\\\\\\\\\\\\\\\\\\\
+\begin{frame}%[allowframebreaks]
+\frametitle{General Supervised Learning Workflow}
+
+    \begin{center}
+        \includegraphics[width=.7\linewidth]{figures/phases1.pdf}
+    \end{center}
+
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
+
+\subsection{The \twopkt{} Logic Ecosystem}
+
+\begin{frame}{Overview}
+    \begin{block}{The \twopkt{} project \hfill (\url{https://github.com/tuProlog/2p-kt})}
+        \begin{itemize}
+            \item Kotlin-based implementation of a logic ecosystem
+            \item multi-platform, multi-OS, multi-paradigm
+        \end{itemize}
+    \end{block} 
+
+    \begin{center}
+        \includegraphics[width=.7\linewidth]{figures/project-map.png}    
+    \end{center}
+
+    \vspace{-.5cm}
+
+    \begin{multicols}{2}
+        \begin{itemize}\small
+            \item knowledge representation
+            
+            \item \ldots and storage
+            
+            \item \ldots and parsing/presentation
+
+            \item Prolog-like inference support
+            %
+            \item \ldots or concurrent / probabilistic
+            
+            \item LP--OOP interoperability
+        \end{itemize}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{\twopkt{}'s General API for Logic Resolution\ccite{2pkt-jelia2021}}
+
+    \begin{columns}
+        \begin{column}{.49\linewidth}
+            \includegraphics[width=\linewidth]{figures/primitive-usage.pdf}
+        \end{column}
+        \begin{column}{.49\linewidth}
+            \includegraphics[width=\linewidth]{figures/generator.pdf}
+        \end{column}
+    \end{columns}
+
     \vfill
-    %
+
     \begin{itemize}
-        \item motivation 1
-        %
-        \begin{itemize}
-            \item[e.g.] example
-        \end{itemize}
+        \item Logic solvers as \alert{oracles} queried by users
         
         \vfill
-        
-        \item motivation 2
-        %
-        \begin{itemize}
-            \item note
-        \end{itemize}
-        
-        \vfill
-        
-        \item motivation 3 with citations \ccite{crawford2016artificial,RibeiroSG16,wexler2017computer}
-        
-        \vfill
-        
-        \item etc
-        
+
+        \item Generators as \alert{gateways} towards the external world
     \end{itemize}
 \end{frame}
-%\\\\\\\\\\\\\\\\\\\\\
 
-%\\\\\\\\\\\\\\\\\\\\\
-\begin{frame}{Some state of the art (optional)}
+\section{Contributions}
 
-    Provide relevant information about the state of the art / related works here, possibly with references
-
-\end{frame}
-%\\\\\\\\\\\\\\\\\\\\\
-
-%\\\\\\\\\\\\\\\\\\\\\
-\begin{frame}{Contribution of the paper}
-
-\begin{block}{Explicitly state the contributions of the paper}
-    \begin{itemize}
-        \item contribution 1
-        \item contribution 2
-    \end{itemize}
-\end{block}
-
-\end{frame}
-%\\\\\\\\\\\\\\\\\\\\\
-
-%===============================================================================
-\section{Theory / modelling / design}
-%===============================================================================
+\subsection{Expected benefits}
 
 %\\\\\\\\\\\\\\\\\\\\\
 \begin{frame}%[allowframebreaks]
-\frametitle{Theory / modelling / design}
+\frametitle{Overview on expected benefits}
 
-    Provide 2-3 slides discussing the Theory / modelling / design
+    \begin{itemize}
+        \item Hybrid reasoning
+    
+        \item Declarative ML
+    
+        \item Symbolic data sources
+    
+        \item Model selection via resolution
+    
+    \end{itemize}
 
 \end{frame}
 %\\\\\\\\\\\\\\\\\\\\\
 
-\section{Case study / Experiments / Results}
+%\\\\\\\\\\\\\\\\\\\\\
+\begin{frame}%[allowframebreaks]
+    \frametitle{Hybrid reasoning}
+
+    \begin{itemize}
+        \item treating trained ML predictors as ordinary logic predicates
+        \item hence enabling the combined exploitation of LP and ML
+    \end{itemize}
+
+    \prologimport{listings/hybrid-predictor.pl}
+
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
 
 %\\\\\\\\\\\\\\\\\\\\\
 \begin{frame}%[allowframebreaks]
-\frametitle{Case study / Experiments / Results}
+    \frametitle{Declarative ML}
 
-    Provide 2-3 slides discussing the Case study / Experiments / Results of the paper
+    \begin{itemize}
+        \item use logic programs as declarative specification for ML aspects
+    \end{itemize}
+
+    \prologimport{listings/neural-network-declare.pl}
+
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
+
+%\\\\\\\\\\\\\\\\\\\\\
+\begin{frame}%[allowframebreaks]
+    \frametitle{Symbolic data sources}
+
+    \begin{itemize}
+        \item use logic theories as datasets, and train predictors upon them
+    \end{itemize}
+
+    \prologimport{listings/logic-dataset-loading.pl}
 
 \end{frame}
 %\\\\\\\\\\\\\\\\\\\\\

@@ -1,4 +1,11 @@
-/* attributes definition here */
+% schema declaration
+attribute(0, sepal_length, real).
+attribute(1, sepal_width, real).
+attribute(2, petal_length, real).
+attribute(3, petal_width, real).
+attribute(4, species, categorical([setosa, versicolor, virginica])).
+schema_target([species]).
+schema_name(iris).
 
 % dataset definition
 iris(5.1, 3.2, 1.4, 0.2, setosa).
