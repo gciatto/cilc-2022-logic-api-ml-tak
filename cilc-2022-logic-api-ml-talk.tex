@@ -9,8 +9,8 @@
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 % version
-\newcommand{\versionmajor}{0}
-\newcommand{\versionminor}{4}
+\newcommand{\versionmajor}{1}
+\newcommand{\versionminor}{0}
 \newcommand{\versionpatch}{0}
 \newcommand{\version}{\versionmajor.\versionminor.\versionpatch}
 %
@@ -26,7 +26,7 @@
 % same authors order of the presented paper
 \author[\sspeaker{Ciatto}, Castigliò, Calegari]{
 	\speaker{Giovanni Ciatto}$^{*}$ % empth the presenting author
-	\and 
+	\and
 	Matteo Castigliò$^{\dagger}$
 	\and
 	Roberta Calegari$^{\S}$
@@ -64,25 +64,29 @@
 
 %\\\\\\\\\\\\\\\\\\\\\
 \begin{frame}[c]{Context}
-    
+
     \begin{itemize}
-        \item Prolog is the most prominent LP technology out there\ccite{prolog50years-tplp,lptech4mas-jaamas35}
+        \item Prolog is the most prominent LP technology\ccite{prolog50years-tplp}
         %
         \begin{itemize}
-            \item used to implement other logic-based technologies 
+            \item used to implement other logic-based technologies\ccite{lptech4mas-jaamas35}
         \end{itemize}
-        
+
         \vfill
-        
-        \item Plenty of libraries supporting ML in mainstream programming languages
+
+        \item Plenty of libraries supporting ML in mainstream languages
         %
         \begin{itemize}
             \item main features: training, (de)serialising, or using ML predictors
-            \item[eg] Scikit-Learn or Tensorflow for Python, Smile or \deeplearningforj{} on the JVM
+            %
+            \begin{itemize}
+                \item[eg] Scikit-Learn or Tensorflow for Python
+                \item[eg] Smile or \deeplearningforj{} on the JVM
+            \end{itemize}
         \end{itemize}
-        
+
         \vfill
-        
+
         \item Poor interoperability among LP and ML
         %
         \begin{itemize}
@@ -101,27 +105,27 @@
         \begin{itemize}
             \item especially for what concerns the ``LP calls ML'' case
         \end{itemize}
-        
+
         \vfill
-        
+
         \item Support the exploitation of ML predictors in LP
         %
         \begin{itemize}
-            \item[eg] for training, (de)serialising, or using them 
+            \item[eg] for training, (de)serialising, or using them
         \end{itemize}
-        
+
         \vfill
-        
+
         \item Enable the exploitation of trained predictors as logic predicates
-        
+
         \vfill
-        
+
         \item Support the implementation of hybrid systems
          %
          \begin{itemize}
             \item[ie] where symbolic AI is used to govern or combine sub-symbolic predictors
         \end{itemize}
-        
+
     \end{itemize}
 \end{frame}
 %\\\\\\\\\\\\\\\\\\\\\
@@ -136,15 +140,15 @@
             \item[ie] a set of logic predicates for working ML, in LP
             \item covering all phases of a ML workflow
         \end{itemize}
-        
+
         \vfill
 
         \item Design a technological architecture for re-using existing ML libraries
-        
+
         \vfill
 
         \item Select technologies for prototyping the API
-        
+
         \vfill
 
         \item Highlight the (expected) benefits
@@ -176,10 +180,10 @@
             \item Kotlin-based implementation of a logic ecosystem
             \item multi-platform, multi-OS, multi-paradigm
         \end{itemize}
-    \end{block} 
+    \end{block}
 
     \begin{center}
-        \includegraphics[width=.7\linewidth]{figures/project-map.png}    
+        \includegraphics[width=.7\linewidth]{figures/project-map.png}
     \end{center}
 
     \vspace{-.5cm}
@@ -187,15 +191,15 @@
     \begin{multicols}{2}
         \begin{itemize}\small
             \item knowledge representation
-            
+
             \item \ldots and storage
-            
+
             \item \ldots and parsing/presentation
 
             \item Prolog-like inference support
             %
             \item \ldots or concurrent / probabilistic
-            
+
             \item LP--OOP interoperability
         \end{itemize}
     \end{multicols}
@@ -216,7 +220,7 @@
 
     \begin{itemize}
         \item Logic solvers as \alert{oracles} queried by users
-        
+
         \vfill
 
         \item Generators as \alert{gateways} towards the external world
@@ -233,13 +237,13 @@
 
     \begin{itemize}
         \item Hybrid reasoning
-    
+
         \item Declarative ML
-    
+
         \item Symbolic data sources
-    
+
         \item Model selection via resolution
-    
+
     \end{itemize}
 
 \end{frame}
@@ -280,37 +284,104 @@
         \item use logic theories as datasets, and train predictors upon them
     \end{itemize}
 
-    \prologimport{listings/logic-dataset-loading.pl}
+    \prologimport[basicstyle=\tiny\ttfamily]{listings/logic-dataset-loading.pl}
 
 \end{frame}
 %\\\\\\\\\\\\\\\\\\\\\
 
-\section{Conclusions \& future works}
+%\\\\\\\\\\\\\\\\\\\\\
+\begin{frame}[allowframebreaks]
+    \frametitle{Model selection via resolution}
+
+    \begin{itemize}
+        \item exploit the non-determinism of resolution explore all possible choices
+    \end{itemize}
+
+    \prologimport%[basicstyle=\tiny\ttfamily]
+    {listings/training.pl}
+
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
+
+\subsection{Architectural Overview}
 
 %\\\\\\\\\\\\\\\\\\\\\
 \begin{frame}%[allowframebreaks]
-\frametitle{Conclusions \& future works}
+    \frametitle{Most relevant components}
 
-\begin{block}{Summing up}
-    Summarise the most relevant contributions of this study:
+    \begin{columns}
+        \column{.44\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/layers.pdf}
+        \column{.56\linewidth}
+        \begin{itemize}
+            \item a library of logic predicates (\mllib)
+            \item some underlying OOP library for ML
+            \item some underlying LP facility
+            %
+            \begin{itemize}
+                \item supporting OOP-interoperability
+            \end{itemize}
+        \end{itemize}
+    \end{columns}
+
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
+
+\subsection{Main logic API}
+
+%\\\\\\\\\\\\\\\\\\\\\
+\begin{frame}%[allowframebreaks]
+    \frametitle{About the \mllib{}}
+
+    \includegraphics[width=\linewidth]{figures/entities.pdf}
     %
     \begin{itemize}
-        \item conclusion 1
-        \item conclusion 2
-        \item conclusion 3
+        \item 4 main kinds of entities: Schema, Dataset, Transformation, Predictor
+        %
+        \begin{itemize}
+            \item plus many ancillary ones (e.g. Parameter, Neural Network, Layer)
+        \end{itemize}
+        \item many predicates supporting their creation an manipulation in LP
+    \end{itemize}
+
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
+
+\subsection{Technology Selection}
+
+%\\\\\\\\\\\\\\\\\\\\\
+\begin{frame}%[allowframebreaks]
+    \frametitle{Technology Selection for the JVM}
+
+    \input{tables/technologies.tex}
+
+\end{frame}
+%\\\\\\\\\\\\\\\\\\\\\
+
+\section{Conclusions \& Future works}
+
+%\\\\\\\\\\\\\\\\\\\\\
+\begin{frame}%[allowframebreaks]
+\frametitle{Conclusions \& Future works}
+
+\begin{block}{Summing up}
+    \begin{itemize}
+        \item Design a corpus of predicates supporting ``LP calls ML''
+        \item Identify key architectural requirements for its implementation
+        \item Select technologies and prototype for the JVM
     \end{itemize}
 \end{block}
 
-\begin{exampleblock}{Future works}
-    Sketch some future research directions
-    %
+\begin{exampleblock}{Future Works}
     \begin{itemize}
-        \item future work 1
-        \item future work 2
+        \item Port \twopkt{} on Python\footnotemark{}, find some ML tech. \& prototype
+        \item Complete support for non-neural predictors
+        \item Experiment the creation of actual hybrid systems
     \end{itemize}
 \end{exampleblock}
 
-(may be split into 2 slides)
+\footnotetext{see \url{https://github.com/tuProlog/2ppy}}
 
 \end{frame}
 %\\\\\\\\\\\\\\\\\\\\\
